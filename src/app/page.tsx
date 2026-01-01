@@ -80,9 +80,9 @@ export default function Home() {
       <footer className="border-t py-12 bg-muted/30">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex gap-8 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-colors">Privacy</a>
-            <a href="#" className="hover:text-primary transition-colors">Terms</a>
-            <a href="#" className="hover:text-primary transition-colors">Help</a>
+            <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link href="/help" className="hover:text-primary transition-colors">Help</Link>
           </div>
           <p className="text-sm text-muted-foreground">
             © 2026 Chatterbox Labs LLC.
