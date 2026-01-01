@@ -118,16 +118,6 @@ export default function SignupPage() {
             </CardContent>
           </form>
           <CardFooter className="flex flex-col gap-4 text-center">
-            <div className="text-sm text-muted-foreground">
-              By clicking continue, you agree to our{' '}
-              <Link href="/terms" className="underline underline-offset-4 hover:text-primary transition-colors">
-                Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link href="/privacy" className="underline underline-offset-4 hover:text-primary transition-colors">
-                Privacy Policy
-              </Link>.
-            </div>
             <div className="text-sm">
               Already have an account?{' '}
               <Link href="/login" className="text-primary font-medium hover:underline">
@@ -136,6 +126,16 @@ export default function SignupPage() {
             </div>
           </CardFooter>
         </Card>
+        <div className="text-sm text-muted-foreground mt-6 text-center">
+          By clicking continue, you agree to our{' '}
+          <Link href="/terms" className="underline underline-offset-4 hover:text-primary transition-colors">
+            Terms of Service
+          </Link>{' '}
+          and{' '}
+          <Link href="/privacy" className="underline underline-offset-4 hover:text-primary transition-colors">
+            Privacy Policy
+          </Link>.
+        </div>
       </div>
     </div>
   )
