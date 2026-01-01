@@ -15,7 +15,7 @@ export default function Home() {
               Log in
             </Link>
             <Button asChild size="sm">
-              <Link href="/onboarding">Get chatterbox free</Link>
+              <Link href="/signup">Get chatterbox free</Link>
             </Button>
           </div>
         </div>
@@ -34,7 +34,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
             <Button asChild size="lg" className="h-12 px-8 text-lg font-medium rounded-full">
-              <Link href="/onboarding">
+              <Link href="/signup">
                 Get chatterbox free <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
