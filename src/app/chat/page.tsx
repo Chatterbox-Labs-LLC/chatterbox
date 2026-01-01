@@ -38,9 +38,6 @@ export default function ChatPage() {
     <div className="flex h-screen bg-background text-foreground overflow-hidden">
       {/* Sidebar - Workspaces */}
       <div className="w-[72px] bg-muted/50 border-r flex flex-col items-center py-4 gap-4 overflow-y-auto">
-        <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground cursor-pointer hover:rounded-xl transition-all">
-          <MessageSquare className="w-6 h-6" />
-        </div>
         <Separator className="w-8" />
         <div className="w-12 h-12 bg-muted rounded-[24px] flex items-center justify-center hover:bg-primary/20 hover:rounded-xl transition-all cursor-pointer">
           <Plus className="w-6 h-6 text-primary" />

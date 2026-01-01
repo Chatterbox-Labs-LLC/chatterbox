@@ -16,13 +16,6 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <div className="mb-8 flex items-center gap-2">
-        <Link href="/" className="flex items-center gap-2">
-          <MessageSquare className="w-6 h-6 text-primary" />
-          <span className="text-xl font-bold tracking-tight">chatterbox</span>
-        </Link>
-      </div>
-
       <div className="w-full max-w-[450px]">
         {step === 'signup' && (
           <Card className="border-none shadow-none bg-transparent">
@@ -168,9 +161,6 @@ export default function OnboardingPage() {
 
         {step === 'complete' && (
           <div className="text-center space-y-6">
-            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageSquare className="w-10 h-10 text-primary" />
-            </div>
             <h1 className="text-4xl font-bold tracking-tight">Welcome to chatterbox, {fullName.split(' ')[0]}!</h1>
             <p className="text-muted-foreground text-lg">
               Your workspace <strong>{workspaceName}</strong> is ready. 
