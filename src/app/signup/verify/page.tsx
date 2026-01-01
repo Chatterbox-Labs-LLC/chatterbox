@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -14,7 +14,7 @@ import {
 import { toast } from 'sonner'
 import { supabase } from '@/lib/supabase'
 
-export default function VerifyPage() {
+function VerifyContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const email = searchParams.get('email')
@@ -95,61 +95,78 @@ export default function VerifyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-[450px]">
-        <Card className="border shadow-lg bg-card text-center">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-3xl font-bold">Verify your email</CardTitle>
-            <CardDescription className="text-muted-foreground">
-              We&apos;ve sent a 6-digit code to <span className="font-medium text-foreground">{email}</span>
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center space-y-6">
-            <InputOTP
-              maxLength={6}
-              value={otp}
-              onChange={setOtp}
-              onComplete={handleVerify}
-              disabled={isVerifying}
-            >
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-              </InputOTPGroup>
-              <InputOTPSeparator />
-              <InputOTPGroup>
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
+    <div className="w-full max-w-[450px]">
+      <Card className="border shadow-lg bg-card text-center">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-3xl font-bold">Verify your email</CardTitle>
+          <CardDescription className="text-muted-foreground">
+            We&apos;ve sent a 6-digit code to <span className="font-medium text-foreground">{email}</span>
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col items-center space-y-6">
+          <InputOTP
+            maxLength={6}
+            value={otp}
+            onChange={setOtp}
+            onComplete={handleVerify}
+            disabled={isVerifying}
+          >
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup>
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
 
-            <Button 
-              className="w-full h-11 text-base" 
-              onClick={handleVerify}
-              disabled={otp.length !== 6 || isVerifying}
+          <Button 
+            className="w-full h-11 text-base" 
+            onClick={handleVerify}
+            disabled={otp.length !== 6 || isVerifying}
+          >
+            {isVerifying ? 'Verifying...' : 'Verify Email'}
+          </Button>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-4">
+          <div className="text-sm text-muted-foreground">
+            Didn&apos;t receive a code?{' '}
+            <button
+              onClick={handleResend}
+              disabled={resendDisabled}
+              className="text-primary font-medium hover:underline disabled:opacity-50 disabled:no-underline"
             >
-              {isVerifying ? 'Verifying...' : 'Verify Email'}
-            </Button>
-          </CardContent>
-          <CardFooter className="flex flex-col gap-4">
-            <div className="text-sm text-muted-foreground">
-              Didn&apos;t receive a code?{' '}
-              <button
-                onClick={handleResend}
-                disabled={resendDisabled}
-                className="text-primary font-medium hover:underline disabled:opacity-50 disabled:no-underline"
-              >
-                {resendDisabled ? `Resend in ${countdown}s` : 'Resend code'}
-              </button>
-            </div>
-            <Link href="/signup" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              ← Back to signup
-            </Link>
-          </CardFooter>
-        </Card>
-      </div>
+              {resendDisabled ? `Resend in ${countdown}s` : 'Resend code'}
+            </button>
+          </div>
+          <Link href="/signup" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            ← Back to signup
+          </Link>
+        </CardFooter>
+      </Card>
     </div>
   )
 }
+
+export default function VerifyPage() {
+  return (
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+      <Suspense fallback={
+        <div className="w-full max-w-[450px]">
+          <Card className="border shadow-lg bg-card text-center">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-3xl font-bold">Loading...</CardTitle>
+            </CardHeader>
+          </Card>
+        </div>
+      }>
+        <VerifyContent />
+      </Suspense>
+    </div>
+  )
+}
+
