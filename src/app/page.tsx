@@ -1,58 +1,104 @@
 'use client'
 
-import { useChatStore } from '@/store/use-chat-store'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { MessageSquare, Send } from 'lucide-react'
-import { useState } from 'react'
+import { MessageSquare, ArrowRight, Globe, Users, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Home() {
-  const { messages, addMessage } = useChatStore()
-  const [input, setInput] = useState('')
-
-  const handleSend = () => {
-    if (!input.trim()) return
-    addMessage({ id: Date.now(), text: input, sender: 'user' })
-    setInput('')
-  }
-
   return (
-    <main className="flex h-screen flex-col items-center justify-center p-4 bg-background text-foreground">
-      <div className="w-full max-w-2xl border rounded-lg shadow-lg flex flex-col h-[600px] bg-card">
-        <header className="p-4 border-b flex items-center gap-2">
-          <MessageSquare className="w-6 h-6 text-primary" />
-          <h1 className="text-xl font-bold">chatterbox</h1>
-        </header>
-        
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-4">
-            {messages.length === 0 ? (
-              <p className="text-center text-muted-foreground mt-10">No messages yet. Start chatting!</p>
-            ) : (
-              messages.map((m) => (
-                <div key={m.id} className="flex flex-col gap-1">
-                  <div className="bg-secondary p-2 rounded-lg self-start max-w-[80%]">
-                    {m.text}
-                  </div>
-                </div>
-              ))
-            )}
+    <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-primary/10">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-primary p-1.5 rounded-lg">
+              <MessageSquare className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <span className="text-xl font-bold tracking-tight">chatterbox</span>
           </div>
-        </ScrollArea>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-sm font-medium hover:text-primary transition-colors">
+              Log in
+            </Link>
+            <Button asChild size="sm">
+              <Link href="/onboarding">Get chatterbox free</Link>
+            </Button>
+          </div>
+        </div>
+      </nav>
 
-        <footer className="p-4 border-t flex gap-2">
-          <Input 
-            placeholder="Type a message..." 
-            value={input} 
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          />
-          <Button onClick={handleSend}>
-            <Send className="w-4 h-4" />
-          </Button>
-        </footer>
-      </div>
-    </main>
+      {/* Hero Section */}
+      <main className="flex-1 pt-32 pb-16">
+        <div className="container mx-auto px-4 text-center max-w-4xl">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
+            Your team&apos;s entire <br />
+            <span className="text-primary">conversation, in one place.</span>
+          </h1>
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+            Chatterbox is the workspace where teams communicate, collaborate, and grow. 
+            Beautifully simple, incredibly powerful.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+            <Button asChild size="lg" className="h-12 px-8 text-lg font-medium rounded-full">
+              <Link href="/onboarding">
+                Get chatterbox free <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" className="h-12 px-8 text-lg font-medium rounded-full">
+              Request a demo
+            </Button>
+          </div>
+
+          {/* Feature Grid */}
+          <div className="grid md:grid-cols-3 gap-8 text-left mt-24">
+            <div className="p-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
+                <Users className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Team First</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Organize your team into channels, groups, or direct messages. Scale from 2 to 2,000.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Lightning Fast</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Built for speed with real-time updates and an interface that stays out of your way.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
+                <Globe className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Work Anywhere</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Sync seamlessly across desktop, mobile, and web. Your messages follow you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t py-12 bg-muted/30">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center gap-2">
+            <MessageSquare className="w-5 h-5 text-primary" />
+            <span className="font-bold">chatterbox</span>
+          </div>
+          <div className="flex gap-8 text-sm text-muted-foreground">
+            <a href="#" className="hover:text-primary transition-colors">Privacy</a>
+            <a href="#" className="hover:text-primary transition-colors">Terms</a>
+            <a href="#" className="hover:text-primary transition-colors">Help</a>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            © 2026 Chatterbox Labs LLC.
+          </p>
+        </div>
+      </footer>
+    </div>
   )
 }

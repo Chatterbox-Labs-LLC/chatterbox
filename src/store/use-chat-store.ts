@@ -1,9 +1,16 @@
 import { create } from 'zustand'
 
+interface Message {
+  id: number
+  text: string
+  sender: string
+  time: string
+}
+
 interface ChatState {
-  messages: any[]
-  addMessage: (message: any) => void
-  setMessages: (messages: any[]) => void
+  messages: Message[]
+  addMessage: (message: Message) => void
+  setMessages: (messages: Message[]) => void
 }
 
 export const useChatStore = create<ChatState>((set) => ({
